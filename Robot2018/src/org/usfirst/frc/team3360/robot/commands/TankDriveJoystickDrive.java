@@ -10,25 +10,22 @@ package org.usfirst.frc.team3360.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-/**
- * An example command.  You can replace me with your own command.
- */
-public class RunTankDrive extends Command {
-	public RunTankDrive() {
+public class TankDriveJoystickDrive extends Command {
+	public TankDriveJoystickDrive() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.tankdrive);
+		requires(Robot.tankDrive);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.tankdrive.setDriveValue(0, 0);
+		Robot.tankDrive.setDriveValue(0, 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.tankdrive.DriveWithJoystick();
+		Robot.tankDrive.driveWithJoysticks();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -51,7 +48,6 @@ public class RunTankDrive extends Command {
 	}
 	
 	private void exit() {
-		Robot.tankdrive.setDriveValue(0, 0);
+		Robot.tankDrive.setDriveValue(0, 0);
 	}
-	
 }
