@@ -17,29 +17,25 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  */
 
 public class RobotMap {
+	public static TalonSRX tankDriveL1Motor;
+	public static TalonSRX tankDriveL2Motor;
+	public static TalonSRX tankDriveL3Motor;
 	
-	public static TalonSRX TankDriveR1;
-	public static TalonSRX TankDriveR2;
-	public static TalonSRX TankDriveR3;
-	
-	public static TalonSRX TankDriveL1;
-	public static TalonSRX TankDriveL2;
-	public static TalonSRX TankDriveL3;
+	public static TalonSRX tankDriveR1Motor;
+	public static TalonSRX tankDriveR2Motor;
+	public static TalonSRX tankDriveR3Motor;
 	
 	public static TalonSRX elevatorMotor;
-	
 
-public static void init(){
-	
-	TankDriveR1 = new TalonSRX (4);
-	TankDriveR2 = new TalonSRX (5);
-	TankDriveR3 = new TalonSRX (6);
-	
-	TankDriveL1 = new TalonSRX (1);
-	TankDriveL2 = new TalonSRX (2);
-	TankDriveL3 = new TalonSRX (3);
-	
-	elevatorMotor = new TalonSRX (12); //A changer
-	
+	public static void init(){
+		tankDriveL1Motor = new TalonSRX (1);
+		tankDriveL2Motor = new TalonSRX (2);
+		tankDriveL3Motor = new TalonSRX (3);
+		
+		tankDriveR1Motor = new TalonSRX (4);
+		tankDriveR2Motor = new TalonSRX (5);
+		tankDriveR3Motor = new TalonSRX (6);
+		
+		elevatorMotor = new TalonSRX (12); //TODO : talon srx ID a changer
 	}
 }

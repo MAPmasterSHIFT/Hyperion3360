@@ -7,15 +7,12 @@
 
 package org.usfirst.frc.team3360.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3360.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3360.robot.subsystems.Elevator;
-import org.usfirst.frc.team3360.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
 
@@ -27,21 +24,21 @@ import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends TimedRobot {
-	
-	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
-	
+public class Robot extends IterativeRobot {
+	public static final boolean DEBUG = false;
+
 	public static OI oi;
 	
-	public static TankDrive tankdrive;
-	
+	public static TankDrive tankDrive;
 	public static Elevator elevator;
 	
+	public static DigitalInput autoSwitch1 = new DigitalInput(0);    
+    public static DigitalInput autoSwitch2 = new DigitalInput(2);
+    public static DigitalInput autoSwitch3 = new DigitalInput(3);
+    public static DigitalInput autoSwitch4 = new DigitalInput(4);
+    public static DigitalInput autoSwitch5 = new DigitalInput(5);
 	
-
-	
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	Command autonomousCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -50,13 +47,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init();
+		
 		oi = new OI();
-		tankdrive = new TankDrive();
+		
+		tankDrive = new TankDrive();
 		elevator = new Elevator();
 		
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		// TODO : get autonomous mode physical switch state
 	}
 
 	/**
@@ -87,11 +84,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
-
 		String gamedata;
 		gamedata = DriverStation.getInstance().getGameSpecificMessage();
 		
+		// TODO : finish implement autonomous mode selection
 		if(gamedata.charAt(0) == 'L') {
 			System.out.println("Your switch side is Left");
 		}
@@ -114,11 +110,11 @@ public class Robot extends TimedRobot {
 		}
 		
 		
-		
+		// TODO : reset tankdrive encoders 
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
 		}
 	}
 
@@ -136,8 +132,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
 		}
 	}
 
@@ -154,5 +150,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
+	}
+	
+	public static boolean isDebugEnable() {
+		return DEBUG;
 	}
 }

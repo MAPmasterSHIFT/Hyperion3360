@@ -9,81 +9,79 @@ package org.usfirst.frc.team3360.robot.subsystems;
 
 import org.usfirst.frc.team3360.robot.Robot;
 import org.usfirst.frc.team3360.robot.RobotMap;
-import org.usfirst.frc.team3360.robot.commands.RunElevator;
+import org.usfirst.frc.team3360.robot.commands.ElevatorRaise;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * An example subsystem.  You can replace me with your own Subsystem.
- */
-public class Elevator extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-	
+public class Elevator extends Subsystem {	
 	TalonSRX elevatormotor = RobotMap.elevatorMotor;
-	//Command FreeMode;
-	public boolean freemode;
 	
+	public boolean freeModeFlag;
 	
-	
+	public Elevator() {
+	    
+	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new RunElevator());
+		setDefaultCommand(new ElevatorRaise());
 	}
 	
-	public void RaiseWithCoJoystick(){
-		double CopilotLevierVal = Robot.oi.getCopilotJoystick().getRawAxis(0);
-		freemode = Robot.oi.getCopilotJoystick().getRawButton(12);
-		//System.out.println(freemode + "STATE BOUTON FREEMODE");
-		//FreeMode = false;
-		//JoystickButton SideButton = Robot.oi.getButtonSideJoystick().whileHeld(FreeMode());
+	public void raiseWithCoJoystick(){
+		double copilotLevierVal = Robot.oi.getCopilotJoystick().getRawAxis(0);
 		
+		freeModeFlag = Robot.oi.getCopilotJoystick().getRawButton(12);
 		
-		//elevatormotor.set(ControlMode.PercentOutput , CopilotLevierVal);
-		
-		if(freemode) {
-			elevatormotor.set(ControlMode.PercentOutput , CopilotLevierVal);
-		}
-		else {
-		if(CopilotLevierVal <= -0.95) {
-			elevatormotor.set(ControlMode.PercentOutput, 0);
-			System.out.println("Elevator: 0 feet ");
-		}else if (CopilotLevierVal >= -0.95 && CopilotLevierVal <= -0.56) {
-			//2 feet
-			elevatormotor.set(ControlMode.PercentOutput, 0.2);
-			System.out.println("Elevator: 2 feet ");
-		}else if (CopilotLevierVal >= -0.50 && CopilotLevierVal <= -0.056) {
-			//4 feet
-			elevatormotor.set(ControlMode.PercentOutput, 0.4 );
-			System.out.println("Elevator: 4 feet" );
-		}else if (CopilotLevierVal >= 0 && CopilotLevierVal <= 0.48) {
-			//5 feet
-			elevatormotor.set(ControlMode.PercentOutput, 0.6);
-			System.out.println("Elevator: 5 feet" );
-		}else if (CopilotLevierVal >= 0.54 && CopilotLevierVal <= 0.98) {
-			//6 feet
-			elevatormotor.set(ControlMode.PercentOutput, 1);
-			System.out.println("Elevator: 6 feet" );
-		}
+		if(Robot.isDebugEnable()) {
+			System.out.println("freeModeFlag STATE = " + freeModeFlag);
+			System.out.println("copilotLevierVal: " + copilotLevierVal);
 		}
 		
-		
-
-
-		
-			//System.out.println("CopilotLevierVal: " + CopilotLevierVal);
-	
+		if(freeModeFlag) {
+			elevatormotor.set(ControlMode.PercentOutput , copilotLevierVal);
+		} else {
+			if(copilotLevierVal <= -0.95) {
+				elevatormotor.set(ControlMode.PercentOutput, 0);
+				
+				if(Robot.isDebugEnable()) {
+					System.out.println("Elevator: 0 feet ");
+				}
+			} else if (copilotLevierVal >= -0.95 && copilotLevierVal <= -0.56) {
+				//2 feet
+				elevatormotor.set(ControlMode.PercentOutput, 0.2);
+				
+				if(Robot.isDebugEnable()) {
+					System.out.println("Elevator: 2 feet ");
+				}
+			} else if (copilotLevierVal >= -0.50 && copilotLevierVal <= -0.056) {
+				//4 feet
+				elevatormotor.set(ControlMode.PercentOutput, 0.4 );
+				
+				if(Robot.isDebugEnable()) {
+					System.out.println("Elevator: 4 feet" );
+				}
+			} else if (copilotLevierVal >= 0 && copilotLevierVal <= 0.48) {
+				//5 feet
+				elevatormotor.set(ControlMode.PercentOutput, 0.6);
+				
+				if(Robot.isDebugEnable()) {
+					System.out.println("Elevator: 5 feet" );
+				}
+			} else if (copilotLevierVal >= 0.54 && copilotLevierVal <= 0.98) {
+				//6 feet
+				elevatormotor.set(ControlMode.PercentOutput, 1);
+				
+				if(Robot.isDebugEnable()) {
+					System.out.println("Elevator: 6 feet" );
+				}
+			}
+		}	
 	}
 	
-	public double encoderTofeet(double val) {
-		
-	return val/72;
+	// TODO : elevatorWithEncoder
+	public double encoderTofeet(double val) {	
+		return val/72;
 	}
-	
-	
-	
-	
 }
 

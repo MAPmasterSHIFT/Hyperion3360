@@ -10,23 +10,22 @@ package org.usfirst.frc.team3360.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-/**
- * An example command.  You can replace me with your own command.
- */
-public class ExampleCommand extends Command {
-	public ExampleCommand() {
+public class ElevatorRaise extends Command {
+	public ElevatorRaise() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kExampleSubsystem);
+		requires(Robot.elevator);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.elevator.raiseWithCoJoystick();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -38,11 +37,16 @@ public class ExampleCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		exit();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		exit();
+	}
+	public void exit() {
+		Robot.elevator.raiseWithCoJoystick();
 	}
 }

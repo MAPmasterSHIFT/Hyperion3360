@@ -9,42 +9,36 @@ package org.usfirst.frc.team3360.robot.subsystems;
 
 import org.usfirst.frc.team3360.robot.Robot;
 import org.usfirst.frc.team3360.robot.RobotMap;
-import org.usfirst.frc.team3360.robot.commands.RunTankDrive;
+import org.usfirst.frc.team3360.robot.commands.TankDriveJoystickDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * An example subsystem.  You can replace me with your own Subsystem.
- */
 public class TankDrive extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
-	TalonSRX TankDriveR1 = RobotMap.TankDriveR1;
-	TalonSRX TankDriveR2 = RobotMap.TankDriveR2;
-	TalonSRX TankDriveR3 = RobotMap.TankDriveR3;
+	TalonSRX tankDriveL1Motor = RobotMap.tankDriveL1Motor;
+	TalonSRX tankDriveL2Motor = RobotMap.tankDriveL2Motor;
+	TalonSRX tankDriveL3Motor = RobotMap.tankDriveL3Motor;
 	
-	TalonSRX TankDriveL1 = RobotMap.TankDriveL1;
-	TalonSRX TankDriveL2 = RobotMap.TankDriveL2;
-	TalonSRX TankDriveL3 = RobotMap.TankDriveL3;
+	TalonSRX tankDriveR1Motor = RobotMap.tankDriveR1Motor;
+	TalonSRX tankDriveR2Motor = RobotMap.tankDriveR2Motor;
+	TalonSRX tankDriveR3Motor = RobotMap.tankDriveR3Motor;
 	
+	public TankDrive() {
+    
+	}
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new RunTankDrive());
+		setDefaultCommand(new TankDriveJoystickDrive());
 	}
 
-	public void DriveWithJoystick() {
-		
+	public void driveWithJoysticks() {
 		double JoystickLeftVal = Robot.oi.getLJoystick().getRawAxis(1);
 		double JoystickRightVal = Robot.oi.getRJoystick().getRawAxis(1);
-		
-		
-		
-		// set Joystick to 0 if they are between -0.1 and 0.1
+   	 
+		// Configure Joystick deathzone : set Joystick to 0 if axis value is between -0.1 and 0.1
 		if(JoystickLeftVal > -0.1 && JoystickLeftVal < 0.1) {
 			JoystickLeftVal = 0;
 		}
@@ -52,28 +46,24 @@ public class TankDrive extends Subsystem {
 			JoystickRightVal = 0;
 		}
 		
+		tankDriveL1Motor.set(ControlMode.PercentOutput, JoystickLeftVal);
+		tankDriveL2Motor.set(ControlMode.PercentOutput, JoystickLeftVal);
+		tankDriveL3Motor.set(ControlMode.PercentOutput, JoystickLeftVal);
 		
-		TankDriveR1.set(ControlMode.PercentOutput, -JoystickRightVal);
-		TankDriveR2.set(ControlMode.PercentOutput, -JoystickRightVal);
-		TankDriveR3.set(ControlMode.PercentOutput, -JoystickRightVal);
-		
-		TankDriveL1.set(ControlMode.PercentOutput, JoystickLeftVal);
-		TankDriveL2.set(ControlMode.PercentOutput, JoystickLeftVal);
-		TankDriveL3.set(ControlMode.PercentOutput, JoystickLeftVal);
-		
-		
-		
+		tankDriveR1Motor.set(ControlMode.PercentOutput, -JoystickRightVal);
+		tankDriveR2Motor.set(ControlMode.PercentOutput, -JoystickRightVal);
+		tankDriveR3Motor.set(ControlMode.PercentOutput, -JoystickRightVal);
 	}
 	
 	public void setDriveValue(double RightVal, double LeftVal) {
-		TankDriveR1.set(ControlMode.Position, -RightVal);
-		TankDriveR2.set(ControlMode.Position, -RightVal);
-		TankDriveR3.set(ControlMode.Position, -RightVal);
+		tankDriveL1Motor.set(ControlMode.Position, LeftVal);
+		tankDriveL2Motor.set(ControlMode.Position, LeftVal);
+		tankDriveL3Motor.set(ControlMode.Position, LeftVal);
 		
-		TankDriveL1.set(ControlMode.Position, -LeftVal);
-		TankDriveL2.set(ControlMode.Position, -LeftVal);
-		TankDriveL3.set(ControlMode.Position, -LeftVal);
+		tankDriveR1Motor.set(ControlMode.Position, RightVal);
+		tankDriveR2Motor.set(ControlMode.Position, RightVal);
+		tankDriveR3Motor.set(ControlMode.Position, RightVal);
 	}
-
-
+	
+	// TODO : driveWithEncoders
 }
