@@ -26,6 +26,9 @@ public class RobotMap {
 	public static TalonSRX tankDriveR3Motor;
 	
 	public static TalonSRX elevatorMotor;
+	
+	public static TalonSRX climbMotorRight;
+	public static TalonSRX climbMotorLeft;
 
 	public static void init(){
 		tankDriveL1Motor = new TalonSRX (1);
@@ -37,5 +40,8 @@ public class RobotMap {
 		tankDriveR3Motor = new TalonSRX (6);
 		
 		elevatorMotor = new TalonSRX (12); //TODO : talon srx ID a changer
+		
+		climbMotorRight = new TalonSRX (22);//TODO : talon srx ID a changer
+		climbMotorLeft = new TalonSRX (21);
 	}
 }
