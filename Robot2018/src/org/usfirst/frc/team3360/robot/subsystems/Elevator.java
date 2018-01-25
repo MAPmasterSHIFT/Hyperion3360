@@ -16,7 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Elevator extends Subsystem {	
-	TalonSRX elevatormotor = RobotMap.elevatorMotor;
+	TalonSRX elevatorMotor = RobotMap.elevatorMotor;
 	
 	public boolean freeModeFlag;
 	
@@ -39,38 +39,38 @@ public class Elevator extends Subsystem {
 		}
 		
 		if(freeModeFlag) {
-			elevatormotor.set(ControlMode.PercentOutput , copilotLevierVal);
+			elevatorMotor.set(ControlMode.PercentOutput , copilotLevierVal);
 		} else {
 			if(copilotLevierVal <= -0.95) {
-				elevatormotor.set(ControlMode.PercentOutput, 0);
+				elevatorMotor.set(ControlMode.PercentOutput, 0);
 				
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 0 feet ");
 				}
 			} else if (copilotLevierVal >= -0.95 && copilotLevierVal <= -0.56) {
 				//2 feet
-				elevatormotor.set(ControlMode.PercentOutput, 0.2);
+				elevatorMotor.set(ControlMode.PercentOutput, 0.2);
 				
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 2 feet ");
 				}
 			} else if (copilotLevierVal >= -0.50 && copilotLevierVal <= -0.056) {
 				//4 feet
-				elevatormotor.set(ControlMode.PercentOutput, 0.4 );
+				elevatorMotor.set(ControlMode.PercentOutput, 0.4 );
 				
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 4 feet" );
 				}
 			} else if (copilotLevierVal >= 0 && copilotLevierVal <= 0.48) {
 				//5 feet
-				elevatormotor.set(ControlMode.PercentOutput, 0.6);
+				elevatorMotor.set(ControlMode.PercentOutput, 0.6);
 				
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 5 feet" );
 				}
 			} else if (copilotLevierVal >= 0.54 && copilotLevierVal <= 0.98) {
 				//6 feet
-				elevatormotor.set(ControlMode.PercentOutput, 1);
+				elevatorMotor.set(ControlMode.PercentOutput, 1);
 				
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 6 feet" );
