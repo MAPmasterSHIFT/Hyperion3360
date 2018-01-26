@@ -19,7 +19,7 @@ public class Elevator extends Subsystem {
 	TalonSRX elevatorMotor = RobotMap.elevatorMotor;
 	
 	public boolean freeModeFlag;
-	
+	public boolean isRaise;
 	public Elevator() {
 	    
 	}
@@ -43,14 +43,14 @@ public class Elevator extends Subsystem {
 		} else {
 			if(copilotLevierVal <= -0.95) {
 				elevatorMotor.set(ControlMode.PercentOutput, 0);
-				
+				isRaise = false;
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 0 feet ");
 				}
 			} else if (copilotLevierVal >= -0.95 && copilotLevierVal <= -0.56) {
 				//2 feet
 				elevatorMotor.set(ControlMode.PercentOutput, 0.2);
-				
+				isRaise = true;
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 2 feet ");
 				}

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team3360.robot.subsystems.Climber;
 import org.usfirst.frc.team3360.robot.subsystems.Elevator;
+import org.usfirst.frc.team3360.robot.subsystems.Grabber;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
 
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	public static TankDrive tankDrive;
 	public static Elevator elevator;
 	public static Climber climber;
+	public static Grabber grabber;
 	
 	public static DigitalInput autoSwitch1 = new DigitalInput(0);    
     public static DigitalInput autoSwitch2 = new DigitalInput(2);
@@ -58,6 +60,7 @@ public class Robot extends IterativeRobot {
 		tankDrive = new TankDrive();
 		elevator = new Elevator();
 		climber = new Climber();
+		grabber = new Grabber();
 		
 		// TODO : get autonomous mode physical switch state
 	}
