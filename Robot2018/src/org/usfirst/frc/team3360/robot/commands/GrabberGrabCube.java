@@ -10,8 +10,8 @@ package org.usfirst.frc.team3360.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-public class RunGrabber extends Command {
-	public RunGrabber() {
+public class GrabberGrabCube extends Command {
+	public GrabberGrabCube() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.grabber);
 	}
@@ -19,13 +19,13 @@ public class RunGrabber extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
+		Robot.grabber.grabberIdle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.grabber.Grab();
+		Robot.grabber.grabCube();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -46,7 +46,8 @@ public class RunGrabber extends Command {
 	protected void interrupted() {
 		exit();
 	}
+	
 	public void exit() {
-		Robot.grabber.Grab();
+		Robot.grabber.grabberIdle();
 	}
 }
