@@ -16,10 +16,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Elevator extends Subsystem {	
-	TalonSRX elevatorMotor = RobotMap.elevatorMotor;
+	private final TalonSRX elevatorLeftMotor = RobotMap.elevatorLeftMotor;
+	private final TalonSRX elevatorRightMotor = RobotMap.elevatorRightMotor;
 	
-	public boolean freeModeFlag;
-	public boolean isRaise;
+	private boolean freeModeFlag;
+	private boolean isRaise;
+	
 	public Elevator() {
 	    
 	}
@@ -29,9 +31,9 @@ public class Elevator extends Subsystem {
 	}
 	
 	public void raiseWithCoJoystick(){
-		double copilotLevierVal = Robot.oi.getCopilotJoystick().getRawAxis(0);
+		double copilotLevierVal = Robot.oi.getJoystickCoPilot().getRawAxis(0);
 		
-		freeModeFlag = Robot.oi.getCopilotJoystick().getRawButton(12);
+		freeModeFlag = Robot.oi.getJoystickCoPilot().getRawButton(12);
 		
 		if(Robot.isDebugEnable()) {
 			System.out.println("freeModeFlag STATE = " + freeModeFlag);
@@ -39,49 +41,52 @@ public class Elevator extends Subsystem {
 		}
 		
 		if(freeModeFlag) {
-			elevatorMotor.set(ControlMode.PercentOutput , copilotLevierVal);
+			elevatorLeftMotor.set(ControlMode.PercentOutput , copilotLevierVal);
+			elevatorRightMotor.set(ControlMode.PercentOutput , copilotLevierVal);
 		} else {
 			if(copilotLevierVal <= -0.95) {
-				elevatorMotor.set(ControlMode.PercentOutput, 0);
-				isRaise = false;
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 0 feet ");
 				}
+				
+				isRaise = false;
+				
 			} else if (copilotLevierVal >= -0.95 && copilotLevierVal <= -0.56) {
-				//2 feet
-				elevatorMotor.set(ControlMode.PercentOutput, 0.2);
-				isRaise = true;
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 2 feet ");
 				}
-			} else if (copilotLevierVal >= -0.50 && copilotLevierVal <= -0.056) {
-				//4 feet
-				elevatorMotor.set(ControlMode.PercentOutput, 0.4 );
 				
+				isRaise = true;
+				
+			} else if (copilotLevierVal >= -0.50 && copilotLevierVal <= -0.056) {
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 4 feet" );
 				}
-			} else if (copilotLevierVal >= 0 && copilotLevierVal <= 0.48) {
-				//5 feet
-				elevatorMotor.set(ControlMode.PercentOutput, 0.6);
 				
+				isRaise = true;
+				
+			} else if (copilotLevierVal >= 0 && copilotLevierVal <= 0.48) {
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 5 feet" );
 				}
-			} else if (copilotLevierVal >= 0.54 && copilotLevierVal <= 0.98) {
-				//6 feet
-				elevatorMotor.set(ControlMode.PercentOutput, 1);
 				
+				isRaise = true;
+				
+			} else if (copilotLevierVal >= 0.54 && copilotLevierVal <= 0.98) {
 				if(Robot.isDebugEnable()) {
 					System.out.println("Elevator: 6 feet" );
 				}
+				
+				isRaise = true;
 			}
 		}	
 	}
 	
-	// TODO : elevatorWithEncoder
-	public double encoderTofeet(double val) {	
-		return val/72;
+	
+	public boolean isRaise() {
+		return isRaise;
 	}
+	
+	// TODO : elevatorWithEncoder
 }
 
