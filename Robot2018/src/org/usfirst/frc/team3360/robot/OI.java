@@ -7,33 +7,50 @@
 
 package org.usfirst.frc.team3360.robot;
 
+import org.usfirst.frc.team3360.robot.commands.GrabberGrabCube;
+import org.usfirst.frc.team3360.robot.commands.GrabberReleaseCube;
+import org.usfirst.frc.team3360.robot.commands.WinchClimb;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {	
-	public Joystick RJoystick;
-	public Joystick LJoystick;
-	public Joystick CoPilotJoystick;
+	public Joystick joystickLeft;
+    public Joystick joystickRight;
+    public Joystick joystickCoPilot;
+	
+    public JoystickButton btnCopilotGrab;
+    public JoystickButton btnCopilotRelease;
+	public JoystickButton btnCopilotWinch;
 	
 	public OI(){
-		RJoystick = new Joystick(0);
-		LJoystick = new Joystick(1);
-		CoPilotJoystick = new Joystick(2);
+		joystickRight = new Joystick(0);
+		joystickLeft = new Joystick(1);
+		joystickCoPilot = new Joystick(2);
 		
+		btnCopilotGrab = new JoystickButton(joystickCoPilot, 1);
+        btnCopilotGrab.whileHeld(new GrabberGrabCube());
+        
+        btnCopilotRelease = new JoystickButton(joystickCoPilot, 2);
+        btnCopilotRelease.whileHeld(new GrabberReleaseCube());
+        
+		btnCopilotWinch = new JoystickButton(joystickCoPilot, 11);
+		btnCopilotWinch.whileHeld(new WinchClimb());
 	}
 	
-	public Joystick getRJoystick() {
-		return RJoystick;
-	}
-	
-	public Joystick getLJoystick() {
-		return LJoystick;
-	}
-	
-	public Joystick getCopilotJoystick() {
-		return CoPilotJoystick;
-	}
+	public Joystick getJoystickLeft() {
+        return joystickLeft;
+    }
+
+    public Joystick getJoystickRight() {
+        return joystickRight;
+    }
+    
+    public Joystick getJoystickCoPilot() {
+    	return joystickCoPilot;
+    }
 }

@@ -12,9 +12,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
-import org.usfirst.frc.team3360.robot.subsystems.Climber;
+import org.usfirst.frc.team3360.robot.subsystems.Winch;
 import org.usfirst.frc.team3360.robot.subsystems.Elevator;
 import org.usfirst.frc.team3360.robot.subsystems.Grabber;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
@@ -35,14 +34,14 @@ public class Robot extends IterativeRobot {
 	
 	public static TankDrive tankDrive;
 	public static Elevator elevator;
-	public static Climber climber;
+	public static Winch winch;
 	public static Grabber grabber;
 	
 	public static DigitalInput autoSwitch1 = new DigitalInput(0);    
-    public static DigitalInput autoSwitch2 = new DigitalInput(2);
-    public static DigitalInput autoSwitch3 = new DigitalInput(3);
-    public static DigitalInput autoSwitch4 = new DigitalInput(4);
-    public static DigitalInput autoSwitch5 = new DigitalInput(5);
+    public static DigitalInput autoSwitch2 = new DigitalInput(1);
+    public static DigitalInput autoSwitch3 = new DigitalInput(2);
+    public static DigitalInput autoSwitch4 = new DigitalInput(3);
+    public static DigitalInput autoSwitch5 = new DigitalInput(4);
 
 	
 	Command autonomousCommand;
@@ -59,7 +58,7 @@ public class Robot extends IterativeRobot {
 		
 		tankDrive = new TankDrive();
 		elevator = new Elevator();
-		climber = new Climber();
+		winch = new Winch();
 		grabber = new Grabber();
 		
 		// TODO : get autonomous mode physical switch state

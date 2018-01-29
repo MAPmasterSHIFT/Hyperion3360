@@ -25,16 +25,17 @@ public class RobotMap {
 	public static TalonSRX tankDriveR2Motor;
 	public static TalonSRX tankDriveR3Motor;
 	
-	public static TalonSRX elevatorMotor;
+	public static TalonSRX elevatorLeftMotor;
+	public static TalonSRX elevatorRightMotor;
 	
-	public static TalonSRX climbMotorRight;
-	public static TalonSRX climbMotorLeft;
+	public static TalonSRX winchLeftMotor;
+	public static TalonSRX winchRightMotor;
 	
-	public static TalonSRX grabRightMotor;
-	public static TalonSRX grabLeftMotor;
+	public static TalonSRX grabberLeftMotor;
+	public static TalonSRX grabberRightMotor;
 	
-	public static TalonSRX frontGrabLMotor;
-	public static TalonSRX frontGrabRMotor;
+	public static TalonSRX intakeLeftMotor;
+	public static TalonSRX intakeRightMotor;
 
 	public static void init(){
 		tankDriveL1Motor = new TalonSRX (1);
@@ -45,15 +46,16 @@ public class RobotMap {
 		tankDriveR2Motor = new TalonSRX (5);
 		tankDriveR3Motor = new TalonSRX (6);
 		
-		elevatorMotor = new TalonSRX (12); //TODO : talon srx ID a changer
+		elevatorLeftMotor = new TalonSRX (10);
+		elevatorRightMotor = new TalonSRX (11);
 		
-		climbMotorRight = new TalonSRX (22);//TODO : talon srx ID a changer
-		climbMotorLeft = new TalonSRX (21);//TODO : talon srx ID a changer
+		winchLeftMotor = new TalonSRX (20);
+		winchRightMotor = new TalonSRX (21);
 		
-		grabRightMotor = new TalonSRX (31);//TODO : talon srx ID a changer
-		grabLeftMotor = new TalonSRX (0);//TODO : talon srx ID a changer
+		grabberLeftMotor = new TalonSRX (30);
+		grabberRightMotor = new TalonSRX (31);
 		
-		frontGrabLMotor = new TalonSRX (0);//TODO : talon srx ID a changer
-		frontGrabRMotor = new TalonSRX (0);//TODO : talon srx ID a changer
+		intakeLeftMotor = new TalonSRX (40);
+		intakeRightMotor = new TalonSRX (41);
 	}
 }
