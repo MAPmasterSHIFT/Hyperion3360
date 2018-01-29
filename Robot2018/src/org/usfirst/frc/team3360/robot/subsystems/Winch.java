@@ -6,44 +6,29 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team3360.robot.subsystems;
-import org.usfirst.frc.team3360.robot.Robot;
+
 import org.usfirst.frc.team3360.robot.RobotMap;
-import org.usfirst.frc.team3360.robot.commands.Climb;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Climber extends Subsystem {	
-		public boolean climbButton;
-		
-		TalonSRX climbMotorRight = RobotMap.climbMotorRight;
-		TalonSRX climbMotorLeft = RobotMap.climbMotorLeft;
+public class Winch extends Subsystem {			
+	private final TalonSRX winchLeftMotor = RobotMap.winchLeftMotor;
+	private final TalonSRX winchRightMotor = RobotMap.winchRightMotor;
 	
-	public Climber() {
+	public Winch() {
 		
-	    
 	}
 		
 	public void initDefaultCommand() {
-		setDefaultCommand(new Climb());
+		
 	}
 	
-	public void robotClimb(){
-		climbButton = Robot.oi.getCopilotJoystick().getRawButton(7);
-		if(climbButton) {
-			//TODO : Make it work with encoder
-			climbMotorRight.set(ControlMode.PercentOutput, -1);
-			climbMotorLeft.set(ControlMode.PercentOutput, -1);
-		}else {
-			climbMotorRight.set(ControlMode.PercentOutput, 0);
-			climbMotorLeft.set(ControlMode.PercentOutput, 0);
-		}
-			
+	public void setWinchSpeed(double speed) {
+		winchLeftMotor.set(ControlMode.PercentOutput, speed);
+		winchRightMotor.set(ControlMode.PercentOutput, speed);
 	}
-	
-
-	
 }
 
