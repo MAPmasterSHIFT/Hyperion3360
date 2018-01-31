@@ -61,6 +61,7 @@ public class TankDrive extends Subsystem {
 		double joystickLeftVal = Robot.oi.getJoystickLeft().getRawAxis(1);
 		double joystickRightVal = Robot.oi.getJoystickRight().getRawAxis(1);
    	 
+		
 		// Configure Joystick deathzone : set Joystick to 0 if axis value is between -0.1 and 0.1
 		if(joystickLeftVal > -0.1 && joystickLeftVal < 0.1) {
 			joystickLeftVal = 0;
@@ -76,6 +77,9 @@ public class TankDrive extends Subsystem {
 		tankDriveR1Motor.set(ControlMode.PercentOutput, joystickRightVal);
 		tankDriveR2Motor.set(ControlMode.PercentOutput, joystickRightVal);
 		tankDriveR3Motor.set(ControlMode.PercentOutput, joystickRightVal);
+		
+		
+		
 	}
 	
 	public void setDriveValue(double rightVal, double leftVal) {
@@ -97,6 +101,7 @@ public class TankDrive extends Subsystem {
 		tankDriveL1Motor.set(ControlMode.Position, encodersToInches(-distanceLeft));
 		tankDriveR1Motor.set(ControlMode.Position, encodersToInches(distanceRight));
 	}
+	
 	
 	public void setControlMode(final int mode) {
 		if(mode == AUTO_ROTATE_MODE) {
