@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team3360.robot.subsystems.Winch;
+
+import autocommands.autoDriveWithEncoder;
+
 import org.usfirst.frc.team3360.robot.subsystems.Elevator;
 import org.usfirst.frc.team3360.robot.subsystems.Grabber;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
@@ -37,9 +40,9 @@ public class Robot extends IterativeRobot {
 	public static Winch winch;
 	public static Grabber grabber;
 	
-	public static DigitalInput autoSwitch1 = new DigitalInput(0);    
-    public static DigitalInput autoSwitch2 = new DigitalInput(1);
-    public static DigitalInput autoSwitch3 = new DigitalInput(2);
+	public static DigitalInput autoSwitchCentral = new DigitalInput(0);    
+    public static DigitalInput autoSwitchSide = new DigitalInput(1);
+    public static DigitalInput autoSwitchFocus = new DigitalInput(2);
     public static DigitalInput autoSwitch4 = new DigitalInput(3);
     public static DigitalInput autoSwitch5 = new DigitalInput(4);
 
@@ -94,6 +97,63 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		String gamedata;
 		gamedata = DriverStation.getInstance().getGameSpecificMessage();
+		
+		if(autoSwitchCentral.get()) {
+			if(gamedata.charAt(0) == 'L'){
+				System.out.println("Your switch side is Left");
+				//Auto switch central a gauche
+				autonomousCommand = new autoDriveWithEncoder(0, 0);
+			}
+			else{
+				System.out.println("Your switch side is Right");
+				//Auto switch central a droite
+				autonomousCommand = new autoDriveWithEncoder(0, 0);
+			}
+		}
+		else {
+			if (autoSwitchSide.get()) {
+				//coté gauche départ
+				if(gamedata.charAt(1) == 'L' && gamedata.charAt(0) == 'L' && !autoSwitchFocus.get()){
+					//auto centre 2 bacs.
+				}
+				else if (gamedata.charAt(1) == 'L' && gamedata.charAt(0) == 'L'){
+					//auto petite par coté (2e bac centre?)
+				}
+				else if (gamedata.charAt(1) == 'L') {
+					//auto scale meme coté (2e bac?)
+				}else if (gamedata.charAt(0) == 'L') {
+					//auto sitch par coté (2e bac switch?)
+				}else if (gamedata.charAt(0) == 'L') {
+					//auto sitch par coté (2e bac switch?)
+				}else if (!autoSwitchFocus.get()) {
+					//scale par le centre
+				}else{
+					//switch par le centre
+				}
+			}
+			
+			else {
+				//coté droit départ
+				if(gamedata.charAt(1) == 'R' && gamedata.charAt(0) == 'R' && !autoSwitchFocus.get()){
+					//auto centre 2 bacs.
+				}
+				else if (gamedata.charAt(1) == 'R' && gamedata.charAt(0) == 'R'){
+					//auto petite par coté (2e bac centre?)
+				}
+				else if (gamedata.charAt(1) == 'R') {
+					//auto scale meme coté (2e bac?)
+				}else if (gamedata.charAt(0) == 'R') {
+					//auto sitch par coté (2e bac switch?)
+				}else if (gamedata.charAt(0) == 'R') {
+					//auto sitch par coté (2e bac switch?)
+				}else if (!autoSwitchFocus.get()) {
+					//scale par le centre
+				}else{
+					//switch par le centre
+				}
+			}
+		}
+			
 		
 		// TODO : finish implement autonomous mode selection
 		if(gamedata.charAt(0) == 'L') {
