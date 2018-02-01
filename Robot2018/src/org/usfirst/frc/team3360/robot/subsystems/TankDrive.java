@@ -77,9 +77,6 @@ public class TankDrive extends Subsystem {
 		tankDriveR1Motor.set(ControlMode.PercentOutput, joystickRightVal);
 		tankDriveR2Motor.set(ControlMode.PercentOutput, joystickRightVal);
 		tankDriveR3Motor.set(ControlMode.PercentOutput, joystickRightVal);
-		
-		
-		
 	}
 	
 	public void setDriveValue(double rightVal, double leftVal) {
@@ -102,7 +99,32 @@ public class TankDrive extends Subsystem {
 		tankDriveR1Motor.set(ControlMode.Position, encodersToInches(distanceRight));
 	}
 	
-	
+    public void resetEncoderDistance() {
+    	if(Robot.isDebugEnable()) {
+    		System.out.println("Resetting encoders");
+    	}
+    	
+    	tankDriveL1Motor.setSelectedSensorPosition(0, pidLoopIdx, timeoutMS);
+    	tankDriveR1Motor.setSelectedSensorPosition(0, pidLoopIdx, timeoutMS);
+    	
+    	driveWithEncoders(0, 0);
+    }
+    
+    //returns true when it is done driving
+    public boolean isAtSetPoint() {
+    	return tankDriveL1Motor.getSelectedSensorVelocity(pidLoopIdx) < 40 && tankDriveL1Motor.getSelectedSensorVelocity(pidLoopIdx) > -40 && 
+    			tankDriveR1Motor.getSelectedSensorVelocity(pidLoopIdx) < 40 && tankDriveR1Motor.getSelectedSensorVelocity(pidLoopIdx) > -40;
+    }
+    
+    //Converts requested drive values to Encoder values
+    public double encodersToInches(double val) {
+    	return val / 72;
+    }
+    
+    //Converts a requested turn angle to drive values
+    public double turnDegrees(double val) {
+    	return val * 0.275;
+    }
 	public void setControlMode(final int mode) {
 		if(mode == AUTO_ROTATE_MODE) {
 			tankDriveL1Motor.selectProfileSlot(0, pidLoopIdx);
@@ -194,35 +216,5 @@ public class TankDrive extends Subsystem {
     		tankDriveR3Motor.config_kI(pidLoopIdx, vBusI, timeoutMS);
     		tankDriveR3Motor.config_kD(pidLoopIdx, vBusD, timeoutMS);
     	}
-    }
-	
-	/*** RESET ENCODER ***/
-    public void resetEncoderDistance() {
-    	if(Robot.isDebugEnable()) {
-    		System.out.println("Resetting encoders");
-    	}
-    	
-    	tankDriveL1Motor.setSelectedSensorPosition(0, pidLoopIdx, timeoutMS);
-    	tankDriveR1Motor.setSelectedSensorPosition(0, pidLoopIdx, timeoutMS);
-    	
-    	driveWithEncoders(0, 0);
-    }
-    
-    /*** DISTANCE GETTER ***/
-    //returns true when it is done driving
-    public boolean isAtSetPoint() {
-    	return tankDriveL1Motor.getSelectedSensorVelocity(pidLoopIdx) < 40 && tankDriveL1Motor.getSelectedSensorVelocity(pidLoopIdx) > -40 && 
-    			tankDriveR1Motor.getSelectedSensorVelocity(pidLoopIdx) < 40 && tankDriveR1Motor.getSelectedSensorVelocity(pidLoopIdx) > -40;
-    			
-    }
-    
-    //Converts requested drive values to Encoder values
-    public double encodersToInches(double val) {
-    	return val / 72;
-    }
-    
-    //Converts a requested turn angle to drive values
-    public double turnDegrees(double val) {
-    	return val * 0.275;
     }
 }

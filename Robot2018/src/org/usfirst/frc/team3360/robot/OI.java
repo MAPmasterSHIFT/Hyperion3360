@@ -10,7 +10,7 @@ package org.usfirst.frc.team3360.robot;
 import org.usfirst.frc.team3360.robot.commands.GrabberGrabCube;
 import org.usfirst.frc.team3360.robot.commands.GrabberReleaseCube;
 import org.usfirst.frc.team3360.robot.commands.WinchClimb;
-import org.usfirst.frc.team3360.robot.commands.tankDriveTurn180Degrees;
+import org.usfirst.frc.team3360.robot.commands.TankDriveTurn180Degrees;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -35,7 +35,7 @@ public class OI {
 		joystickCoPilot = new Joystick(2);
 		
 		btnTurn180Degrees = new JoystickButton(joystickRight, 3);
-		btnTurn180Degrees.whenPressed(new tankDriveTurn180Degrees());
+		btnTurn180Degrees.whenPressed(new TankDriveTurn180Degrees());
 		
 		btnCopilotGrab = new JoystickButton(joystickCoPilot, 1);
         btnCopilotGrab.whileHeld(new GrabberGrabCube());

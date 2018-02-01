@@ -14,9 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team3360.robot.subsystems.Winch;
-
-import autocommands.autoDriveWithEncoder;
-
+import org.usfirst.frc.team3360.robot.autocommands.AutoDriveWithEncoders;
 import org.usfirst.frc.team3360.robot.subsystems.Elevator;
 import org.usfirst.frc.team3360.robot.subsystems.Grabber;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
@@ -102,12 +100,12 @@ public class Robot extends IterativeRobot {
 			if(gamedata.charAt(0) == 'L'){
 				System.out.println("Your switch side is Left");
 				//Auto switch central a gauche
-				autonomousCommand = new autoDriveWithEncoder(0, 0);
+				autonomousCommand = new AutoDriveWithEncoders(0, 0);
 			}
 			else{
 				System.out.println("Your switch side is Right");
 				//Auto switch central a droite
-				autonomousCommand = new autoDriveWithEncoder(0, 0);
+				autonomousCommand = new AutoDriveWithEncoders(0, 0);
 			}
 		}
 		else {
