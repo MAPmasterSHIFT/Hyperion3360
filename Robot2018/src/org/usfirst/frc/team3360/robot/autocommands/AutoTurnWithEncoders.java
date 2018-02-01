@@ -5,29 +5,27 @@ import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoDriveWithEncoders extends Command {
- //40 pouce 
- //120 pouce
-	double distanceR;
-	double distanceL;
+public class AutoTurnWithEncoders extends Command {
 
-    public AutoDriveWithEncoders(double rVal, double lVal){
-    	requires(Robot.tankDrive);
-    	distanceR = rVal;
-    	distanceL = lVal;
-    }
+	double deg;
+
+	public AutoTurnWithEncoders(double degrees) {
+		requires(Robot.tankDrive);
+		deg = degrees;
+	}
     
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.tankDrive.setControlMode(TankDrive.AUTO_MOVE_MODE);
+		Robot.tankDrive.setControlMode(TankDrive.AUTO_ROTATE_MODE);
 		Robot.tankDrive.resetEncoderDistance();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.tankDrive.driveWithEncoders(distanceR, distanceL);
+		double value = Robot.tankDrive.turnDegrees(deg);
+   	 	Robot.tankDrive.driveWithEncoders(value, -value);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
