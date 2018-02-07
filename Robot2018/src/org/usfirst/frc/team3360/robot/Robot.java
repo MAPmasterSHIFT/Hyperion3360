@@ -21,8 +21,6 @@ import org.usfirst.frc.team3360.robot.subsystems.Elevator;
 import org.usfirst.frc.team3360.robot.subsystems.Grabber;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
-
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -34,43 +32,43 @@ public class Robot extends IterativeRobot {
 	public static final boolean DEBUG = false;
 
 	public static OI oi;
-	
+
 	public static TankDrive tankDrive;
 	public static Elevator elevator;
 	public static Winch winch;
 	public static Grabber grabber;
-	
-	public static DigitalInput autoSwitchCentral = new DigitalInput(0);    
-    public static DigitalInput autoSwitchSide = new DigitalInput(1);
-    public static DigitalInput autoSwitchFocus = new DigitalInput(2);
-    public static DigitalInput autoSwitch4 = new DigitalInput(3);
-    public static DigitalInput autoSwitch5 = new DigitalInput(4);
 
-	
+	public static DigitalInput autoSwitchCentral = new DigitalInput(0);
+	public static DigitalInput autoSwitchSide = new DigitalInput(1);
+	public static DigitalInput autoSwitchFocus = new DigitalInput(2);
+	public static DigitalInput autoSwitch4 = new DigitalInput(3);
+	public static DigitalInput autoSwitch5 = new DigitalInput(4);
+
 	Command autonomousCommand;
 
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * This function is run when the robot is first started up and should be used
+	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
 		RobotMap.init();
+
 		
-		oi = new OI();
-		
+
 		tankDrive = new TankDrive();
 		elevator = new Elevator();
 		winch = new Winch();
 		grabber = new Grabber();
-		
+
+		oi = new OI();
 		// TODO : get autonomous mode physical switch state
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode. You
+	 * can use it to reset any subsystem information you want to clear when the
+	 * robot is disabled.
 	 */
 	@Override
 	public void disabledInit() {
@@ -84,101 +82,91 @@ public class Robot extends IterativeRobot {
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
+	 * between different autonomous modes using the dashboard. The sendable chooser
+	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+	 * remove all of the chooser code and uncomment the getString code to get the
+	 * auto name from the text box below the Gyro
 	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * <p>
+	 * You can add additional auto modes by adding additional commands to the
+	 * chooser code above (like the commented example) or additional comparisons to
+	 * the switch structure below with additional strings & commands.
 	 */
 	@Override
 	public void autonomousInit() {
 		String gamedata;
 		gamedata = DriverStation.getInstance().getGameSpecificMessage();
-		
-		if(autoSwitchCentral.get()) {
-			if(gamedata.charAt(0) == 'L'){
+
+		if (autoSwitchCentral.get()) {
+			if (gamedata.charAt(0) == 'L') {
 				System.out.println("Your switch side is Left");
-				//Auto switch central a gauche
+				// Auto switch central a gauche
 				autonomousCommand = new AutoSwitchByMidLeft();
-			}
-			else{
+			} else {
 				System.out.println("Your switch side is Right");
-				//Auto switch central a droite
+				// Auto switch central a droite
 				autonomousCommand = new AutoDriveWithEncoders(0, 0);
 			}
-		}
-		else {
+		} else {
 			if (autoSwitchSide.get()) {
-				//coté gauche départ
-				if(gamedata.charAt(1) == 'L' && gamedata.charAt(0) == 'L' && !autoSwitchFocus.get()){
-					//auto grosse (2 bacs).
-				}
-				else if (gamedata.charAt(1) == 'L' && gamedata.charAt(0) == 'L'){
-					//auto petite par coté (2e bac centre?)
-					autonomousCommand = new AutoSwitchBySide(62 , 90);
-				}
-				else if (gamedata.charAt(1) == 'L') {
-					//auto grosse meme coté (2e bac?)
-				}else if (gamedata.charAt(0) == 'L') {
-					//auto petite par coté (2e bac switch?)
-					autonomousCommand = new AutoSwitchBySide(62 , 90);
-				}else if (!autoSwitchFocus.get()) {
-					//grosse par le centre
-				}else{
-					//petite par le centre
+				// cote gauche depart
+				if (gamedata.charAt(1) == 'L' && gamedata.charAt(0) == 'L' && !autoSwitchFocus.get()) {
+					// auto grosse (2 bacs).
+				} else if (gamedata.charAt(1) == 'L' && gamedata.charAt(0) == 'L') {
+					// auto petite par cote (2e bac centre?)
+					autonomousCommand = new AutoSwitchBySide(62, 90);
+				} else if (gamedata.charAt(1) == 'L') {
+					// auto grosse meme cote (2e bac?)
+				} else if (gamedata.charAt(0) == 'L') {
+					// auto petite par cote (2e bac switch?)
+					autonomousCommand = new AutoSwitchBySide(62, 90);
+				} else if (!autoSwitchFocus.get()) {
+					// grosse par le centre
+				} else {
+					// petite par le centre
 				}
 			}
-			
+
 			else {
-				//coté droit départ
-				if(gamedata.charAt(1) == 'R' && gamedata.charAt(0) == 'R' && !autoSwitchFocus.get()){
-					//auto grosse 2 bacs.
-				}
-				else if (gamedata.charAt(1) == 'R' && gamedata.charAt(0) == 'R'){
-					//auto petite par coté (2e bac centre?)
-					autonomousCommand = new AutoSwitchBySide(62 , -90);
-				}
-				else if (gamedata.charAt(1) == 'R') {
-					//auto grosse meme coté (2e bac?)
-				}else if (gamedata.charAt(0) == 'R') {
-					//auto petite par coté (2e bac switch?)´
-					autonomousCommand = new AutoSwitchBySide(62 , -90);
-				}else if (!autoSwitchFocus.get()) {
-					//scale par le centre
-				}else{
-					//switch par le centre
+				// cote droit depart
+				if (gamedata.charAt(1) == 'R' && gamedata.charAt(0) == 'R' && !autoSwitchFocus.get()) {
+					// auto grosse 2 bacs.
+				} else if (gamedata.charAt(1) == 'R' && gamedata.charAt(0) == 'R') {
+					// auto petite par cote (2e bac centre?)
+					autonomousCommand = new AutoSwitchBySide(62, -90);
+				} else if (gamedata.charAt(1) == 'R') {
+					// auto grosse meme cote (2e bac?)
+				} else if (gamedata.charAt(0) == 'R') {
+					// auto petite par cote (2e bac switch?)
+					autonomousCommand = new AutoSwitchBySide(62, -90);
+				} else if (!autoSwitchFocus.get()) {
+					// scale par le centre
+				} else {
+					// switch par le centre
 				}
 			}
 		}
-			
-		
+
 		// TODO : finish implement autonomous mode selection
-		if(gamedata.charAt(0) == 'L') {
+		if (gamedata.charAt(0) == 'L') {
 			System.out.println("Your switch side is Left");
-		}
-		else {
+		} else {
 			System.out.println("Your switch side is Right");
 		}
-		
-		if(gamedata.charAt(1) == 'L' ) {
-			System.out.println("Your scale side is Left");	
-		}
-		else {
+
+		if (gamedata.charAt(1) == 'L') {
+			System.out.println("Your scale side is Left");
+		} else {
 			System.out.println("Your scale side is Right");
 		}
-		
-		if(gamedata.charAt(2) == 'L' ) {
-			System.out.println("Your enemy switch side is Left");	
-		}
-		else {
+
+		if (gamedata.charAt(2) == 'L') {
+			System.out.println("Your enemy switch side is Left");
+		} else {
 			System.out.println("Your enemy switch side is Right");
 		}
-		
-		
-		// TODO : reset tankdrive encoders 
+
+		// TODO : reset tankdrive encoders
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
@@ -218,9 +206,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
+
 	}
-	
+
 	public static boolean isDebugEnable() {
 		return DEBUG;
 	}

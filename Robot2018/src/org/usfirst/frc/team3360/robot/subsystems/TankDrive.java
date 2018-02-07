@@ -59,7 +59,7 @@ public class TankDrive extends Subsystem {
 
 	public void driveWithJoysticks() {
 		double joystickLeftVal = Robot.oi.getJoystickLeft().getRawAxis(1);
-		double joystickRightVal = Robot.oi.getJoystickRight().getRawAxis(1);
+		double joystickRightVal = -Robot.oi.getJoystickRight().getRawAxis(1);
    	 
 		
 		// Configure Joystick deathzone : set Joystick to 0 if axis value is between -0.1 and 0.1
