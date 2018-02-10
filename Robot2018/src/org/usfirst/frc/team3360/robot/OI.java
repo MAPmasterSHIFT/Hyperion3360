@@ -7,10 +7,11 @@
 
 package org.usfirst.frc.team3360.robot;
 
-import org.usfirst.frc.team3360.robot.commands.GrabberGrabCube;
-import org.usfirst.frc.team3360.robot.commands.GrabberReleaseCube;
+import org.usfirst.frc.team3360.robot.autocommands.AutoDriveWithEncoders;
+import org.usfirst.frc.team3360.robot.autocommands.AutoTurnWithEncoders;
+import org.usfirst.frc.team3360.robot.commands.IntakeGrabCube;
+import org.usfirst.frc.team3360.robot.commands.IntakeReleaseCube;
 import org.usfirst.frc.team3360.robot.commands.WinchClimb;
-import org.usfirst.frc.team3360.robot.commands.TankDriveTurn180Degrees;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -24,24 +25,28 @@ public class OI {
     public Joystick joystickRight;
     public Joystick joystickCoPilot;
 	
-    public JoystickButton btnCopilotGrab;
-    public JoystickButton btnCopilotRelease;
+    public JoystickButton btnCopilotIntakeGrab;
+    public JoystickButton btnCopilotIntakeRelease;
 	public JoystickButton btnCopilotWinch;
 	public JoystickButton btnTurn180Degrees;
+	public JoystickButton btnMoveWithEncoders;
 	
 	public OI(){
 		joystickRight = new Joystick(0);
 		joystickLeft = new Joystick(1);
 		joystickCoPilot = new Joystick(2);
 		
-		btnTurn180Degrees = new JoystickButton(joystickRight, 3);
-		btnTurn180Degrees.whenPressed(new TankDriveTurn180Degrees());
+		btnMoveWithEncoders = new JoystickButton(joystickRight, 10);
+		btnMoveWithEncoders.whenPressed(new AutoDriveWithEncoders(72, 72));
 		
-		btnCopilotGrab = new JoystickButton(joystickCoPilot, 1);
-        btnCopilotGrab.whileHeld(new GrabberGrabCube());
+		btnTurn180Degrees = new JoystickButton(joystickRight, 11);
+		btnTurn180Degrees.whenPressed(new AutoTurnWithEncoders(360));
+		
+		btnCopilotIntakeGrab = new JoystickButton(joystickCoPilot, 1);
+        btnCopilotIntakeGrab.whileHeld(new IntakeGrabCube());
         
-        btnCopilotRelease = new JoystickButton(joystickCoPilot, 2);
-        btnCopilotRelease.whileHeld(new GrabberReleaseCube());
+        btnCopilotIntakeRelease = new JoystickButton(joystickCoPilot, 2);
+        btnCopilotIntakeRelease.whileHeld(new IntakeReleaseCube());
         
 		btnCopilotWinch = new JoystickButton(joystickCoPilot, 11);
 		btnCopilotWinch.whileHeld(new WinchClimb());
@@ -59,3 +64,4 @@ public class OI {
     	return joystickCoPilot;
     }
 }
+

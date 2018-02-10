@@ -14,14 +14,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Grabber extends Subsystem {	
-	private final TalonSRX grabberLeftMotor = RobotMap.grabberLeftMotor;
-	private final TalonSRX grabberRightMotor = RobotMap.grabberRightMotor;
+public class Claw extends Subsystem {	
+	private final TalonSRX clawMotor = RobotMap.clawMotor;
 	
 	private final double grabSpeed = -1;
     private final double releaseSpeed = 1;
 	
-	public Grabber() {
+	public Claw() {
 		
 	}
 		
@@ -30,20 +29,19 @@ public class Grabber extends Subsystem {
 	}
 	
 	public void grabCube(){
-		setGrabberSpeed(grabSpeed);
+		setClawSpeed(grabSpeed);
     }
 	
 	public void releaseCube() {
-		setGrabberSpeed(releaseSpeed);
+		setClawSpeed(releaseSpeed);
     }
 	
-	public void grabberIdle() {
-		setGrabberSpeed(0);
+	public void idle() {
+		setClawSpeed(0);
     }
 	
-	private void setGrabberSpeed(double speed) {
-		grabberLeftMotor.set(ControlMode.PercentOutput, speed);
-		grabberRightMotor.set(ControlMode.PercentOutput, speed);
+	private void setClawSpeed(double speed) {
+		clawMotor.set(ControlMode.PercentOutput, speed);
     }
 }
 

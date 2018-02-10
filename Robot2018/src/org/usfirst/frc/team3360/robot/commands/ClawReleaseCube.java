@@ -10,22 +10,22 @@ package org.usfirst.frc.team3360.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-public class ElevatorRaise extends Command {
-	public ElevatorRaise() {
+public class ClawReleaseCube extends Command {
+	public ClawReleaseCube() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.lift);
+		requires(Robot.claw);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
+		Robot.claw.idle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.lift.raiseWithCoJoystick();
+		Robot.claw.releaseCube();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -46,7 +46,8 @@ public class ElevatorRaise extends Command {
 	protected void interrupted() {
 		exit();
 	}
+	
 	public void exit() {
-		Robot.lift.raiseWithCoJoystick();
+		Robot.claw.idle();
 	}
 }

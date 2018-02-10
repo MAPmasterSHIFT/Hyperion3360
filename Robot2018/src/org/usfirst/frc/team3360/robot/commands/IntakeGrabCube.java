@@ -10,22 +10,22 @@ package org.usfirst.frc.team3360.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-public class GrabberReleaseCube extends Command {
-	public GrabberReleaseCube() {
+public class IntakeGrabCube extends Command {
+	public IntakeGrabCube() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.grabber);
+		requires(Robot.intake);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.grabber.grabberIdle();
+		Robot.intake.idle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.grabber.releaseCube();
+		Robot.intake.grabCube();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -48,6 +48,6 @@ public class GrabberReleaseCube extends Command {
 	}
 	
 	public void exit() {
-		Robot.grabber.grabberIdle();
+		Robot.intake.idle();
 	}
 }

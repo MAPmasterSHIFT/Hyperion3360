@@ -9,25 +9,23 @@ package org.usfirst.frc.team3360.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
-import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
-public class TankDriveTurn180Degrees extends Command {
-	public TankDriveTurn180Degrees() {
+public class IntakeReleaseCube extends Command {
+	public IntakeReleaseCube() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.tankDrive);
+		requires(Robot.intake);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.tankDrive.setControlMode(TankDrive.AUTO_ROTATE_MODE);
-		Robot.tankDrive.turnDegrees(0);
+		Robot.intake.idle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.tankDrive.turnDegrees(180);
+		Robot.intake.releaseCube();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -50,6 +48,6 @@ public class TankDriveTurn180Degrees extends Command {
 	}
 	
 	public void exit() {
-		Robot.tankDrive.turnDegrees(0);
+		Robot.intake.idle();
 	}
 }

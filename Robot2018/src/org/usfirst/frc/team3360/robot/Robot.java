@@ -17,8 +17,9 @@ import org.usfirst.frc.team3360.robot.subsystems.Winch;
 import org.usfirst.frc.team3360.robot.autocommands.AutoDriveWithEncoders;
 import org.usfirst.frc.team3360.robot.autocommands.AutoSwitchByMidLeft;
 import org.usfirst.frc.team3360.robot.autocommands.AutoSwitchBySide;
-import org.usfirst.frc.team3360.robot.subsystems.Elevator;
-import org.usfirst.frc.team3360.robot.subsystems.Grabber;
+import org.usfirst.frc.team3360.robot.subsystems.Lift;
+import org.usfirst.frc.team3360.robot.subsystems.Claw;
+import org.usfirst.frc.team3360.robot.subsystems.Intake;
 import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
 /**
@@ -34,9 +35,10 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static TankDrive tankDrive;
-	public static Elevator elevator;
+	public static Lift lift;
 	public static Winch winch;
-	public static Grabber grabber;
+	public static Claw claw;
+	public static Intake intake;
 
 	public static DigitalInput autoSwitchCentral = new DigitalInput(0);
 	public static DigitalInput autoSwitchSide = new DigitalInput(1);
@@ -53,16 +55,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		RobotMap.init();
-
 		
-
 		tankDrive = new TankDrive();
-		elevator = new Elevator();
+		lift = new Lift();
 		winch = new Winch();
-		grabber = new Grabber();
+		claw = new Claw();
+		intake = new Intake();
 
 		oi = new OI();
-		// TODO : get autonomous mode physical switch state
 	}
 
 	/**
@@ -146,27 +146,6 @@ public class Robot extends IterativeRobot {
 				}
 			}
 		}
-
-		// TODO : finish implement autonomous mode selection
-		if (gamedata.charAt(0) == 'L') {
-			System.out.println("Your switch side is Left");
-		} else {
-			System.out.println("Your switch side is Right");
-		}
-
-		if (gamedata.charAt(1) == 'L') {
-			System.out.println("Your scale side is Left");
-		} else {
-			System.out.println("Your scale side is Right");
-		}
-
-		if (gamedata.charAt(2) == 'L') {
-			System.out.println("Your enemy switch side is Left");
-		} else {
-			System.out.println("Your enemy switch side is Right");
-		}
-
-		// TODO : reset tankdrive encoders
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
