@@ -7,33 +7,61 @@
 
 package org.usfirst.frc.team3360.robot;
 
+import org.usfirst.frc.team3360.robot.autocommands.AutoDriveWithEncoders;
+import org.usfirst.frc.team3360.robot.autocommands.AutoTurnWithEncoders;
+import org.usfirst.frc.team3360.robot.commands.IntakeGrabCube;
+import org.usfirst.frc.team3360.robot.commands.IntakeReleaseCube;
+import org.usfirst.frc.team3360.robot.commands.WinchClimb;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {	
-	public Joystick RJoystick;
-	public Joystick LJoystick;
-	public Joystick CoPilotJoystick;
+	public Joystick joystickLeft;
+    public Joystick joystickRight;
+    public Joystick joystickCoPilot;
+	
+    public JoystickButton btnCopilotIntakeGrab;
+    public JoystickButton btnCopilotIntakeRelease;
+	public JoystickButton btnCopilotWinch;
+	public JoystickButton btnTurn180Degrees;
+	public JoystickButton btnMoveWithEncoders;
 	
 	public OI(){
-		RJoystick = new Joystick(0);
-		LJoystick = new Joystick(1);
-		CoPilotJoystick = new Joystick(2);
+		joystickRight = new Joystick(0);
+		joystickLeft = new Joystick(1);
+		joystickCoPilot = new Joystick(2);
 		
+		btnMoveWithEncoders = new JoystickButton(joystickRight, 10);
+		btnMoveWithEncoders.whenPressed(new AutoDriveWithEncoders(72, 72));
+		
+		btnTurn180Degrees = new JoystickButton(joystickRight, 11);
+		btnTurn180Degrees.whenPressed(new AutoTurnWithEncoders(360));
+		
+		btnCopilotIntakeGrab = new JoystickButton(joystickCoPilot, 1);
+        btnCopilotIntakeGrab.whileHeld(new IntakeGrabCube());
+        
+        btnCopilotIntakeRelease = new JoystickButton(joystickCoPilot, 2);
+        btnCopilotIntakeRelease.whileHeld(new IntakeReleaseCube());
+        
+		btnCopilotWinch = new JoystickButton(joystickCoPilot, 11);
+		btnCopilotWinch.whileHeld(new WinchClimb());
 	}
 	
-	public Joystick getRJoystick() {
-		return RJoystick;
-	}
-	
-	public Joystick getLJoystick() {
-		return LJoystick;
-	}
-	
-	public Joystick getCopilotJoystick() {
-		return CoPilotJoystick;
-	}
+	public Joystick getJoystickLeft() {
+        return joystickLeft;
+    }
+
+    public Joystick getJoystickRight() {
+        return joystickRight;
+    }
+    
+    public Joystick getJoystickCoPilot() {
+    	return joystickCoPilot;
+    }
 }
+

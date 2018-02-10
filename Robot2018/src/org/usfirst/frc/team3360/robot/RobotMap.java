@@ -25,10 +25,16 @@ public class RobotMap {
 	public static TalonSRX tankDriveR2Motor;
 	public static TalonSRX tankDriveR3Motor;
 	
-	public static TalonSRX elevatorMotor;
+	public static TalonSRX liftLeftMotor;
+	public static TalonSRX liftRightMotor;
 	
-	public static TalonSRX climbMotorRight;
-	public static TalonSRX climbMotorLeft;
+	public static TalonSRX winchLeftMotor;
+	public static TalonSRX winchRightMotor;
+	
+	public static TalonSRX clawMotor;
+	
+	public static TalonSRX intakeLeftMotor;
+	public static TalonSRX intakeRightMotor;
 
 	public static void init(){
 		tankDriveL1Motor = new TalonSRX (1);
@@ -39,9 +45,16 @@ public class RobotMap {
 		tankDriveR2Motor = new TalonSRX (5);
 		tankDriveR3Motor = new TalonSRX (6);
 		
-		elevatorMotor = new TalonSRX (12); //TODO : talon srx ID a changer
+		liftLeftMotor = new TalonSRX (7);
+		liftRightMotor = new TalonSRX (8);
 		
-		climbMotorRight = new TalonSRX (22);//TODO : talon srx ID a changer
-		climbMotorLeft = new TalonSRX (21);
+		winchLeftMotor = new TalonSRX (9);
+		winchRightMotor = new TalonSRX (10);
+		
+		clawMotor = new TalonSRX (13);
+		
+		intakeLeftMotor = new TalonSRX (11);
+		intakeRightMotor = new TalonSRX (12);
 	}
 }
+

@@ -13,7 +13,7 @@ import org.usfirst.frc.team3360.robot.Robot;
 public class ElevatorRaise extends Command {
 	public ElevatorRaise() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.elevator);
+		requires(Robot.lift);
 	}
 
 	// Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class ElevatorRaise extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.elevator.raiseWithCoJoystick();
+		Robot.lift.raiseWithCoJoystick();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -47,6 +47,6 @@ public class ElevatorRaise extends Command {
 		exit();
 	}
 	public void exit() {
-		Robot.elevator.raiseWithCoJoystick();
+		Robot.lift.raiseWithCoJoystick();
 	}
 }

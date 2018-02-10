@@ -9,6 +9,7 @@ package org.usfirst.frc.team3360.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
+import org.usfirst.frc.team3360.robot.subsystems.TankDrive;
 
 public class TankDriveJoystickDrive extends Command {
 	public TankDriveJoystickDrive() {
@@ -19,6 +20,7 @@ public class TankDriveJoystickDrive extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.tankDrive.setControlMode(TankDrive.TELEOP_MODE);
 		Robot.tankDrive.setDriveValue(0, 0);
 	}
 
