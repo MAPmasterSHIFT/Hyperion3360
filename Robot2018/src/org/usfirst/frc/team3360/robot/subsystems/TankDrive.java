@@ -47,6 +47,9 @@ public class TankDrive extends Subsystem {
     
     private final int pidLoopIdx = 0;
     private final int timeoutMS = 100;
+    
+    public double joystickLeftVal = Robot.oi.getJoystickLeft().getRawAxis(1);
+	public double joystickRightVal = -Robot.oi.getJoystickRight().getRawAxis(1);
 	
 	public TankDrive() {
 		
@@ -58,9 +61,7 @@ public class TankDrive extends Subsystem {
 	}
 
 	public void driveWithJoysticks() {
-		double joystickLeftVal = Robot.oi.getJoystickLeft().getRawAxis(1);
-		double joystickRightVal = -Robot.oi.getJoystickRight().getRawAxis(1);
-		
+
 		// Configure Joystick deathzone : set Joystick to 0 if axis value is between -0.1 and 0.1
 		if(joystickLeftVal > -0.1 && joystickLeftVal < 0.1) {
 			joystickLeftVal = 0;
@@ -68,6 +69,13 @@ public class TankDrive extends Subsystem {
 		if(joystickRightVal > -0.1 && joystickRightVal < 0.1) {
 			joystickRightVal = 0;
 		}
+		
+		if(Robot.lift.isRaise()) {
+			joystickLeftVal = joystickLeftVal/2;
+			joystickRightVal = joystickRightVal/2;
+		}
+		
+		
 		
 		tankDriveL1Motor.set(ControlMode.PercentOutput, joystickLeftVal);
 		tankDriveL2Motor.set(ControlMode.PercentOutput, joystickLeftVal);

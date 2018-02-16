@@ -9,6 +9,8 @@ package org.usfirst.frc.team3360.robot;
 
 import org.usfirst.frc.team3360.robot.autocommands.AutoDriveWithEncoders;
 import org.usfirst.frc.team3360.robot.autocommands.AutoTurnWithEncoders;
+import org.usfirst.frc.team3360.robot.commands.ClawGrabCube;
+import org.usfirst.frc.team3360.robot.commands.ClawReleaseCube;
 import org.usfirst.frc.team3360.robot.commands.IntakeGrabCube;
 import org.usfirst.frc.team3360.robot.commands.IntakeReleaseCube;
 import org.usfirst.frc.team3360.robot.commands.WinchClimb;
@@ -42,11 +44,13 @@ public class OI {
 		btnTurn180Degrees = new JoystickButton(joystickRight, 11);
 		btnTurn180Degrees.whenPressed(new AutoTurnWithEncoders(360));
 		
-		btnCopilotIntakeGrab = new JoystickButton(joystickCoPilot, 1);
+		btnCopilotIntakeGrab = new JoystickButton(joystickLeft, 1);
         btnCopilotIntakeGrab.whileHeld(new IntakeGrabCube());
+        btnCopilotIntakeGrab.whileHeld(new ClawGrabCube());
         
-        btnCopilotIntakeRelease = new JoystickButton(joystickCoPilot, 2);
+        btnCopilotIntakeRelease = new JoystickButton(joystickRight, 1);
         btnCopilotIntakeRelease.whileHeld(new IntakeReleaseCube());
+        btnCopilotIntakeRelease.whileHeld(new ClawReleaseCube());
         
 		btnCopilotWinch = new JoystickButton(joystickCoPilot, 11);
 		btnCopilotWinch.whileHeld(new WinchClimb());
