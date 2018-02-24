@@ -7,10 +7,7 @@ public class AutoSwitchByMidRight extends CommandGroup {
  //120 pouce
 
     public AutoSwitchByMidRight(){
-    	//Drive to the switch
-    	addSequential(new AutoDriveWithEncoders(37 , 37 ));
-    
-    	//TODO: Raise and drop the cube
+    	
     	
     }
     

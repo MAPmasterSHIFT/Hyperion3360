@@ -48,8 +48,8 @@ public class TankDrive extends Subsystem {
     private final int pidLoopIdx = 0;
     private final int timeoutMS = 100;
     
-    public double joystickLeftVal = Robot.oi.getJoystickLeft().getRawAxis(1);
-	public double joystickRightVal = -Robot.oi.getJoystickRight().getRawAxis(1);
+    public double joystickLeftVal;
+	public double joystickRightVal;
 	
 	public TankDrive() {
 		
@@ -61,6 +61,9 @@ public class TankDrive extends Subsystem {
 	}
 
 	public void driveWithJoysticks() {
+		
+		joystickLeftVal = Robot.oi.getJoystickLeft().getRawAxis(1);
+		joystickRightVal = -Robot.oi.getJoystickRight().getRawAxis(1);
 
 		// Configure Joystick deathzone : set Joystick to 0 if axis value is between -0.1 and 0.1
 		if(joystickLeftVal > -0.1 && joystickLeftVal < 0.1) {
@@ -70,11 +73,11 @@ public class TankDrive extends Subsystem {
 			joystickRightVal = 0;
 		}
 		
-		if(Robot.lift.isRaise()) {
+	/*	if(Robot.lift.isRaise()) {
 			joystickLeftVal = joystickLeftVal/2;
 			joystickRightVal = joystickRightVal/2;
 		}
-		
+		*/
 		
 		
 		tankDriveL1Motor.set(ControlMode.PercentOutput, joystickLeftVal);
@@ -85,10 +88,10 @@ public class TankDrive extends Subsystem {
 		tankDriveR2Motor.set(ControlMode.PercentOutput, joystickRightVal);
 		tankDriveR3Motor.set(ControlMode.PercentOutput, joystickRightVal);
 		
-		if(Robot.isDebugEnable()) {
+		//if(Robot.isDebugEnable()) {
 			System.out.println("positionLeft :  " + tankDriveL1Motor.getSensorCollection().getQuadraturePosition());
 	    	System.out.println("positionRight :  " + tankDriveR1Motor.getSensorCollection().getQuadraturePosition());
-		}
+		//}
 	}
 	
 	public void setDriveValue(double rightVal, double leftVal) {
@@ -142,7 +145,7 @@ public class TankDrive extends Subsystem {
     
     // Converts a requested turn angle to drive values
     public double turnDegrees(double val) {
-    	return val * 0.28;
+    	return val * -0.285;
     }
     
 	public void setControlMode(final int mode) {

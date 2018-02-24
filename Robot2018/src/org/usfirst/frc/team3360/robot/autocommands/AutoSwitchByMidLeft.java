@@ -7,18 +7,7 @@ public class AutoSwitchByMidLeft extends CommandGroup {
  //120 pouce
 
     public AutoSwitchByMidLeft(){
-    	//Drive to the powercube of the switch
-    	addSequential(new AutoDriveWithEncoders(39 , 39 ));
-    	//turn 90 degrees
-    	addSequential(new AutoTurnWithEncoders(90));
-    	//drive to alligne the robot to the switch
-    	addSequential(new AutoDriveWithEncoders(16, 16));
-    	//turn 90 degrees
-    	addSequential(new AutoTurnWithEncoders(90));
-    	//drive to alligne the robot to the switch
-    	addSequential(new AutoDriveWithEncoders(37, 37));
     	
-    	//TODO: Raise and drop the cube
     	
     }
     

@@ -50,8 +50,9 @@ public class Lift extends Subsystem {
 	}
 	
 	public void raiseWithCoJoystick(){
+		if(Robot.isAutoOn() == false) {
+			
 		double copilotLevierVal = Robot.oi.getJoystickCoPilot().getRawAxis(0);
-		
 		
 		boolean redButton = Robot.oi.getJoystickCoPilot().getRawButton(2);
 		boolean yellowButton = Robot.oi.getJoystickCoPilot().getRawButton(3);
@@ -66,7 +67,8 @@ public class Lift extends Subsystem {
 			System.out.println("copilotLevierVal: " + copilotLevierVal);
 		}
 		
-		if(!redButton && !greenButton && !yellowButton && !blueButton) {
+		
+		if(!redButton && !greenButton && !yellowButton && !blueButton && !whiteButton) {
 			//TODO free mode lift control
 			double val = raiseValue();
 			
@@ -83,8 +85,7 @@ public class Lift extends Subsystem {
 				isRaise = false;
 			}
 			
-			System.out.println("VOLTAGE OUT : " + liftLeftMotor.getMotorOutputVoltage());
-			System.out.println("POSITION : " + liftLeftMotor.getSensorCollection().getQuadraturePosition());
+			
 		} else {
 			//TODO rework stages
 			if(whiteButton) {
@@ -111,18 +112,25 @@ public class Lift extends Subsystem {
 				isRaise = true;
 			}
 			
-			liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
 		}	
+		
+		liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
+		//System.out.println("VOLTAGE L OUT : " + liftLeftMotor.getMotorOutputVoltage());
+		//System.out.println("AMPS L OUT : " + liftLeftMotor.getOutputCurrent());
+		//System.out.println("VOLTAGE R OUT : " + liftRightMotor.getMotorOutputVoltage());
+		//System.out.println("AMPS R OUT : " + liftRightMotor.getOutputCurrent());
+		//System.out.println("POSITION : " + liftLeftMotor.getSensorCollection().getQuadraturePosition());
+	}
 	}
 	
 	public boolean isRaise() {
-		return isRaise;
+		return liftLeftMotor.getSensorCollection().getQuadraturePosition() < -10000;
 	}
 	
 	private double raiseValue() {
 		double val = (Robot.oi.getJoystickCoPilot().getRawAxis(0) + 1)/2;
 		val = val*-47000;
-		System.out.println("SETPOINT : " + val);
+		//System.out.println("SETPOINT : " + val);
 		return val;
 	}
 	
@@ -140,6 +148,11 @@ public class Lift extends Subsystem {
 		liftLeftMotor.configPeakOutputForward(1, timeoutMS);
 		liftLeftMotor.configPeakOutputReverse(-1, timeoutMS);
 		
+		liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
+	}
+	
+	public void setLiftHeight(double height) {
+		liftLeftMotor.set(ControlMode.Position , height);
 		liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
 	}
 }

@@ -18,8 +18,8 @@ public class Intake extends Subsystem {
 	private final TalonSRX intakeLeftMotor = RobotMap.intakeLeftMotor;
 	private final TalonSRX intakeRightMotor = RobotMap.intakeRightMotor;
 	
-	private final double grabSpeed = -1;
-    private final double releaseSpeed = 1;
+	private final double grabSpeed = -0.7;
+    private final double releaseSpeed = 0.7;
 	
 	public Intake() {
 		
