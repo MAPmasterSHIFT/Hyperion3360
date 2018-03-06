@@ -10,25 +10,34 @@ package org.usfirst.frc.team3360.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-
-public class WinchClimb extends Command {
-	double val;
-	public WinchClimb(double speed) {
+public class ClawHandleCube extends Command {
+	double LastTimeMs;
+	double pulseTimeMs;
+	public ClawHandleCube(double dpulseTimeMs) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.winch);
-		val = speed;
+		requires(Robot.claw);
+		pulseTimeMs = dpulseTimeMs;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
+		Robot.claw.idle();
+		LastTimeMs = System.currentTimeMillis();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.winch.setWinchSpeed(val);
+		System.out.println("EXECUTING HANDLE");
+		if(System.currentTimeMillis() - LastTimeMs > pulseTimeMs  && Robot.lift.isRaise()) {
+		Robot.claw.grabCube();
+		if(System.currentTimeMillis() - LastTimeMs > 1.20*pulseTimeMs) {
+		LastTimeMs = System.currentTimeMillis();
+		}
+		}else {
+		Robot.claw.idle();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -51,6 +60,6 @@ public class WinchClimb extends Command {
 	}
 	
 	public void exit() {
-		Robot.winch.setWinchSpeed(0);
+		Robot.claw.idle();
 	}
 }

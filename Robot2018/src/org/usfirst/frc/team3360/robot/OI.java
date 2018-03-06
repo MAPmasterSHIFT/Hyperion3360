@@ -9,6 +9,9 @@ package org.usfirst.frc.team3360.robot;
 
 import org.usfirst.frc.team3360.robot.autocommands.AutoDriveWithEncoders;
 import org.usfirst.frc.team3360.robot.autocommands.AutoTurnWithEncoders;
+import org.usfirst.frc.team3360.robot.autocommands.ElevatorRaiseAutoDelay;
+import org.usfirst.frc.team3360.robot.commands.ClawGrabCube;
+import org.usfirst.frc.team3360.robot.commands.ClawReleaseCube;
 import org.usfirst.frc.team3360.robot.commands.IntakeGrabCube;
 import org.usfirst.frc.team3360.robot.commands.IntakeReleaseCube;
 import org.usfirst.frc.team3360.robot.commands.WinchClimb;
@@ -28,28 +31,25 @@ public class OI {
     public JoystickButton btnCopilotIntakeGrab;
     public JoystickButton btnCopilotIntakeRelease;
 	public JoystickButton btnCopilotWinch;
-	public JoystickButton btnTurn180Degrees;
-	public JoystickButton btnMoveWithEncoders;
-	
+	public JoystickButton btnCopilotInvertWinch;
 	public OI(){
 		joystickRight = new Joystick(0);
 		joystickLeft = new Joystick(1);
 		joystickCoPilot = new Joystick(2);
 		
-		btnMoveWithEncoders = new JoystickButton(joystickRight, 10);
-		btnMoveWithEncoders.whenPressed(new AutoDriveWithEncoders(72, 72));
-		
-		btnTurn180Degrees = new JoystickButton(joystickRight, 11);
-		btnTurn180Degrees.whenPressed(new AutoTurnWithEncoders(360));
-		
-		btnCopilotIntakeGrab = new JoystickButton(joystickCoPilot, 1);
+		btnCopilotIntakeGrab = new JoystickButton(joystickLeft, 1);
         btnCopilotIntakeGrab.whileHeld(new IntakeGrabCube());
+        btnCopilotIntakeGrab.whileHeld(new ClawGrabCube());
         
-        btnCopilotIntakeRelease = new JoystickButton(joystickCoPilot, 2);
+        btnCopilotIntakeRelease = new JoystickButton(joystickRight, 1);
         btnCopilotIntakeRelease.whileHeld(new IntakeReleaseCube());
+        btnCopilotIntakeRelease.whileHeld(new ClawReleaseCube());
         
 		btnCopilotWinch = new JoystickButton(joystickCoPilot, 11);
-		btnCopilotWinch.whileHeld(new WinchClimb());
+		btnCopilotWinch.whileHeld(new WinchClimb(-1));
+		
+		btnCopilotInvertWinch = new JoystickButton(joystickCoPilot, 7);
+		btnCopilotInvertWinch.whileHeld(new WinchClimb(1));
 	}
 	
 	public Joystick getJoystickLeft() {

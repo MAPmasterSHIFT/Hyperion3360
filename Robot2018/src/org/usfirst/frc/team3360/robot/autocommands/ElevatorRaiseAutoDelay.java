@@ -5,36 +5,45 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team3360.robot.commands;
+package org.usfirst.frc.team3360.robot.autocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3360.robot.Robot;
 
-
-public class WinchClimb extends Command {
-	double val;
-	public WinchClimb(double speed) {
+public class ElevatorRaiseAutoDelay extends Command {
+	double startTimeMs;
+	double delayMs;
+	double dheight;
+	boolean readyToEnd = false;
+	public ElevatorRaiseAutoDelay(double delay, double height) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.winch);
-		val = speed;
+		requires(Robot.lift);
+		delayMs = delay;
+		dheight = height;
+		
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		startTimeMs= System.currentTimeMillis();
 		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.winch.setWinchSpeed(val);
+		if(System.currentTimeMillis() > startTimeMs+delayMs) {
+		Robot.lift.setLiftHeight(dheight);
+		readyToEnd=true;
+		}
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return readyToEnd;
 	}
 
 	// Called once after isFinished returns true
@@ -49,8 +58,7 @@ public class WinchClimb extends Command {
 	protected void interrupted() {
 		exit();
 	}
-	
 	public void exit() {
-		Robot.winch.setWinchSpeed(0);
+		System.out.println("Exit auto Lift command");
 	}
 }

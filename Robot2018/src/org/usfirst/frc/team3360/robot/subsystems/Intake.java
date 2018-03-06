@@ -33,6 +33,10 @@ public class Intake extends Subsystem {
 		setIntakeSpeed(grabSpeed);
     }
 	
+	public void grabCube(double speedLeft, double speedRight){
+		setIntakeSpeed(speedLeft, speedRight);
+    }
+	
 	public void releaseCube() {
 		setIntakeSpeed(releaseSpeed);
     }
@@ -44,6 +48,11 @@ public class Intake extends Subsystem {
 	private void setIntakeSpeed(double speed) {
 		intakeLeftMotor.set(ControlMode.PercentOutput, speed);
 		intakeRightMotor.set(ControlMode.PercentOutput, -speed);
+    }
+	
+	private void setIntakeSpeed(double speedLeft, double speedRight) {
+		intakeLeftMotor.set(ControlMode.PercentOutput, speedLeft);
+		intakeRightMotor.set(ControlMode.PercentOutput, -speedRight);
     }
 }
 

@@ -50,6 +50,7 @@ public class AutoTurnWithEncoders extends Command {
 	}
 	
 	public void exit() {
+		Robot.tankDrive.resetEncoderDistance();
 		Robot.tankDrive.driveWithEncoders(0, 0);
 	}
 }

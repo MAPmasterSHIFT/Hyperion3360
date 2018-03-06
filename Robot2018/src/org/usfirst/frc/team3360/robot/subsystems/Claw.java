@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3360.robot.subsystems;
 
 import org.usfirst.frc.team3360.robot.RobotMap;
+import org.usfirst.frc.team3360.robot.commands.ClawHandleCube;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -25,7 +26,7 @@ public class Claw extends Subsystem {
 	}
 		
 	public void initDefaultCommand() {
-		
+		setDefaultCommand(new ClawHandleCube(750));
 	}
 	
 	public void grabCube(){

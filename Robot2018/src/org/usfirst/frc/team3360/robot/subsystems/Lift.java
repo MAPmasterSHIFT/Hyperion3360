@@ -22,7 +22,7 @@ public class Lift extends Subsystem {
 
 	//TODO tweak pid
 	//maybe set 2 profiles up and down
-    private final double moveP = 0.05;
+    private final double moveP = 0.1;
     private final double moveI = 0;
     private final double moveD = 0;
     private final double moveF = 0;
@@ -35,10 +35,11 @@ public class Lift extends Subsystem {
 	
 	//TODO define lift stages encoder setpoint we want 
 	// lift encoder range 0-50000
-	private double posAt0 = 0;
-	private double posAt1 = 2000;
-	private double posAt2 = 10000;
-	private double posAt3 = 40000;
+	public double posAt0 = 0;
+	public double posAt1 = -10000;
+	public double posAt2 = -20000;
+	private double posAt3 = -45000;
+	
 	
 	public Lift() {
 	    initLift();
@@ -49,7 +50,15 @@ public class Lift extends Subsystem {
 	}
 	
 	public void raiseWithCoJoystick(){
+		if(Robot.isAutoOn() == false) {
+			
 		double copilotLevierVal = Robot.oi.getJoystickCoPilot().getRawAxis(0);
+		
+		boolean redButton = Robot.oi.getJoystickCoPilot().getRawButton(2);
+		boolean yellowButton = Robot.oi.getJoystickCoPilot().getRawButton(3);
+		boolean greenButton = Robot.oi.getJoystickCoPilot().getRawButton(1);
+		boolean blueButton = Robot.oi.getJoystickCoPilot().getRawButton(4);
+		boolean whiteButton = Robot.oi.getJoystickCoPilot().getRawButton(5);
 		
 		freeModeFlag = Robot.oi.getJoystickCoPilot().getRawButton(12);
 		
@@ -58,37 +67,71 @@ public class Lift extends Subsystem {
 			System.out.println("copilotLevierVal: " + copilotLevierVal);
 		}
 		
-		if(freeModeFlag) {
+		
+		if(!redButton && !greenButton && !yellowButton && !blueButton && !whiteButton) {
 			//TODO free mode lift control
+			double val = raiseValue();
+			
+			if(copilotLevierVal <= -0.95) {
+				val = posAt0;
+				isRaise = false;
+			}
+			
+			liftLeftMotor.set(ControlMode.Position, val);
+			
+			if(val == posAt2 && val == posAt3) {
+				isRaise = true;
+			}else {
+				isRaise = false;
+			}
+			
+			
 		} else {
 			//TODO rework stages
-			if(copilotLevierVal <= -0.95) {
+			if(whiteButton) {
 				liftLeftMotor.set(ControlMode.Position , posAt0);
 				isRaise = false;
-				
-			} else if (copilotLevierVal >= -0.95 && copilotLevierVal <= -0.56) {
+			}else if (blueButton) {
+				//copilotLevierVal >= -0.95 && copilotLevierVal <= -0.56
 				liftLeftMotor.set(ControlMode.Position , posAt1);
 				isRaise = true;
 				
-			} else if (copilotLevierVal >= -0.50 && copilotLevierVal <= -0.056) {
+			} else if (greenButton) {
+				//copilotLevierVal >= -0.50 && copilotLevierVal <= -0.56
 				liftLeftMotor.set(ControlMode.Position , posAt2);
 				isRaise = true;
 				
-			} else if (copilotLevierVal >= 0 && copilotLevierVal <= 0.48) {		
+			} else if (yellowButton) {	
+				//copilotLevierVal >= 0 && copilotLevierVal <= 0.48
 				liftLeftMotor.set(ControlMode.Position , posAt3);
 				isRaise = true;
 				
-			} else if (copilotLevierVal >= 0.54 && copilotLevierVal <= 0.98) {		
+			} else if (redButton) {	
+				//copilotLevierVal >= 0.54 && copilotLevierVal <= 0.98
 				liftLeftMotor.set(ControlMode.Position , posAt3);
 				isRaise = true;
 			}
 			
-			liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
 		}	
+		
+		liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
+		//System.out.println("VOLTAGE L OUT : " + liftLeftMotor.getMotorOutputVoltage());
+		//System.out.println("AMPS L OUT : " + liftLeftMotor.getOutputCurrent());
+		//System.out.println("VOLTAGE R OUT : " + liftRightMotor.getMotorOutputVoltage());
+		//System.out.println("AMPS R OUT : " + liftRightMotor.getOutputCurrent());
+		//System.out.println("POSITION : " + liftLeftMotor.getSensorCollection().getQuadraturePosition());
+	}
 	}
 	
 	public boolean isRaise() {
-		return isRaise;
+		return liftLeftMotor.getSensorCollection().getQuadraturePosition() < -10000;
+	}
+	
+	private double raiseValue() {
+		double val = (Robot.oi.getJoystickCoPilot().getRawAxis(0) + 1)/2;
+		val = val*-47000;
+		//System.out.println("SETPOINT : " + val);
+		return val;
 	}
 	
 	private void initLift() {
@@ -105,6 +148,11 @@ public class Lift extends Subsystem {
 		liftLeftMotor.configPeakOutputForward(1, timeoutMS);
 		liftLeftMotor.configPeakOutputReverse(-1, timeoutMS);
 		
+		liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
+	}
+	
+	public void setLiftHeight(double height) {
+		liftLeftMotor.set(ControlMode.Position , height);
 		liftRightMotor.set(ControlMode.Follower, liftLeftMotor.getDeviceID());
 	}
 }
