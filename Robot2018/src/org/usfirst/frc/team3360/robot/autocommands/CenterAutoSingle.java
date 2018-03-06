@@ -19,14 +19,14 @@ public class CenterAutoSingle extends CommandGroup {
         	addSequential(new AutoTurnWithEncoders(90));
         }
     	addParallel(new ElevatorRaiseAutoDelay(750, -30000));
-    	addSequential(new AutoDriveWithEncoders(54, 54));
+    	addSequential(new AutoDriveWithEncoders(50, 50));
     	addParallel(new ClawGrabCube());
     	if(isLeft) {
         	addSequential(new AutoTurnWithEncoders(90));
         	}else {
         	addSequential(new AutoTurnWithEncoders(-90));
         }
-    	addSequential(new AutoDriveWithEncoders(24, 24));
+    	addSequential(new AutoDriveWithEncoders(70, 70));
     	addParallel(new ClawReleaseCube());
     	addSequential(new SystemWait(1000));
     	

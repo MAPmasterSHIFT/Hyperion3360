@@ -18,8 +18,8 @@ public class Intake extends Subsystem {
 	private final TalonSRX intakeLeftMotor = RobotMap.intakeLeftMotor;
 	private final TalonSRX intakeRightMotor = RobotMap.intakeRightMotor;
 	
-	private final double grabSpeed = -0.7;
-    private final double releaseSpeed = 0.7;
+	private final double grabSpeed = -1;
+    private final double releaseSpeed = 1;
 	
 	public Intake() {
 		
@@ -33,6 +33,10 @@ public class Intake extends Subsystem {
 		setIntakeSpeed(grabSpeed);
     }
 	
+	public void grabCube(double speedLeft, double speedRight){
+		setIntakeSpeed(speedLeft, speedRight);
+    }
+	
 	public void releaseCube() {
 		setIntakeSpeed(releaseSpeed);
     }
@@ -44,6 +48,11 @@ public class Intake extends Subsystem {
 	private void setIntakeSpeed(double speed) {
 		intakeLeftMotor.set(ControlMode.PercentOutput, speed);
 		intakeRightMotor.set(ControlMode.PercentOutput, -speed);
+    }
+	
+	private void setIntakeSpeed(double speedLeft, double speedRight) {
+		intakeLeftMotor.set(ControlMode.PercentOutput, speedLeft);
+		intakeRightMotor.set(ControlMode.PercentOutput, -speedRight);
     }
 }
 
