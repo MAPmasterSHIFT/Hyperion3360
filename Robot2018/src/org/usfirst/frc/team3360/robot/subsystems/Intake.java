@@ -12,11 +12,14 @@ import org.usfirst.frc.team3360.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem {	
 	private final TalonSRX intakeLeftMotor = RobotMap.intakeLeftMotor;
 	private final TalonSRX intakeRightMotor = RobotMap.intakeRightMotor;
+	private final DigitalInput intakeLLimit = new DigitalInput(6);
+	private final DigitalInput intakeRLimit = new DigitalInput(7);
 	
 	private final double grabSpeed = -1;
     private final double releaseSpeed = 1;
@@ -34,6 +37,15 @@ public class Intake extends Subsystem {
     }
 	
 	public void grabCube(double speedLeft, double speedRight){
+		System.out.println("LeftVal: " + intakeLLimit.get());
+		System.out.println("RightVal: " + intakeRLimit.get());
+		if(!intakeLLimit.get()) {
+			speedLeft = -speedLeft *0.5;
+		}
+		else if(!intakeRLimit.get()) {
+			speedRight = -speedRight * 0.5;
+		}
+		
 		setIntakeSpeed(speedLeft, speedRight);
     }
 	

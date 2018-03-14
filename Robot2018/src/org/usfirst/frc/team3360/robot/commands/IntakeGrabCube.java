@@ -26,7 +26,7 @@ public class IntakeGrabCube extends Command {
 	@Override
 	protected void execute() {
 		//Robot.intake.grabCube();
-		Robot.intake.grabCube(-0.7, -1.0);
+		Robot.intake.grabCube(-1.0, -1.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
